@@ -1,3 +1,15 @@
+# Why I put bad code in my portfolio: I decided to add this coding project to my portfolio not because the code is good 
+# but because it was one of my earliest coding projects. I had no formal classes or training except a few lessons I had done
+# on the basics of python programming and a few months of solving math puzzles on project euler.
+# This was an attempt to create an AI that could learn the game chopsticks as it played by saving data about series of moves that
+# led to a victory. For me, at this stage it was a very challenging project, and though the program functioned, the AI didn't really
+# get better than an rng player. As you can see not a single function was made or package imported. It was built only with 
+#lists, loops, if conditions, appending, and math and logic operations. The code isn't built through following principles taught in
+# a classroom, it was built purely on my own reasoning.
+
+
+
+# begin code
 # comp training
 
 act = ['split' , 'use left hit left' , 'use left hit right' , 'use right hit left' , 'use right hit right']
