@@ -5,7 +5,7 @@
 
 
 from tictac_extra import *
-
+# see tictac_extra.py. Contains basic variables and functions such as the win condition
 
 # In[2]:
 
