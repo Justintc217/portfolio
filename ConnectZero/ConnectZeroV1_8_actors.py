@@ -7,11 +7,7 @@
 # 3. Dolphin - Random unless sees oppertunity to win immidiately
 # 4. Search - uses MCTS or MCTS + Neural
 # 5. Neural
-# 
-# 
 # TensorFlow Backend
-
-# In[230]:
 
 
 import pprint as pp
@@ -22,10 +18,6 @@ from connect4_win_cond import win_cond
 win_cond = np.array(win_cond)[::-1]
 from ConnectZeroV1_8_game import *
 
-
-# In[189]:
-
-
 class Random():
     def __init__(*args, **kwargs):
         pass
@@ -34,18 +26,10 @@ class Random():
         action = np.random.randint(0,7)
         return action
 
-
-# In[190]:
-
-
 class Human():
     def choice(self, *args, **kwargs):
         action = int(input("pick column 1-7:  " )) - 1
         return action
-
-
-# In[14]:
-
 
 ## general functions list
 
@@ -104,10 +88,6 @@ def place_general(action, player_id, board):
             board[action][i] = player_id
             return board
 
-
-# In[76]:
-
-
 class Branch():
     def __init__(self, branch_id, player_id, board, q = 0, n = 0, policy_weight = 0, initial = False):
         self.branch_id = branch_id
@@ -129,10 +109,7 @@ class Branch():
     def stats(self):
         return (self.n, self.q, self.p, self.branch_id)
 
-
-# In[72]:
-
-
+    
 class MCTS():
     def __init__(self, player_id, board, rollout_player = Random(), neuralnet = None, parent = None, 
                  search_length = 1000, width = 7):
@@ -199,7 +176,6 @@ class MCTS():
                     again = False
         return self.parent
     
-    
     def end_reward(self, node, temp_game):
         if temp_game.winner == node.player_id: return 1
         elif temp_game.winner == 0: return 0
@@ -208,7 +184,6 @@ class MCTS():
             return -1  # don't think this is possible, because for an inspected node that just moved 
                         # it can only win or tie on its turn
 
-            
     def simulate(self, node, history):
         reward = self.run_simulation(node)
         self.back_propogate(history, reward, node.player_id)
@@ -234,20 +209,13 @@ class MCTS():
         else: board = np.array(node.board) # player2 already must wait their turn
         simulator = Gameroom(self.rollout_player, self.rollout_player)
         result = simulator.match(board, saving = False)
-
-        if result.winner == 2:
-            return 1
-        elif result.winner == 1:
-            return -1
-        else:
-            return 0
+        if result.winner == 2: return 1
+        elif result.winner == 1: return -1
+        else: return 0
             
     def evaluate(self):
         result = self.network()
         return np.argmax([result.child(i).n for i in range(self.width)])
-
-
-# In[75]:
 
 
 class Search(): 
@@ -281,9 +249,6 @@ class Search():
         return total_q/total_n
 
 
-# In[74]:
-
-
 class Neural():
     def __init__(self, model = None, random_scale = 0.5):
         if model == None:
@@ -302,7 +267,6 @@ class Neural():
         choices = choice_dist.argsort()[::-1] # best move to worst move
         action = choices[0]
         return action
-    
     
     def setup_model(self, drop = 0.7):
         main_input = Input(shape=(7,7,2), name = "main_input") # change to shape = (49,2) later
@@ -327,9 +291,6 @@ class Neural():
         return model
 
 
-# In[188]:
-
-
 class Dolphin():
     def __init__(*args, **kwargs):
         pass
@@ -349,4 +310,3 @@ class Dolphin():
             
         action = np.random.randint(0,7)
         return action    
-
