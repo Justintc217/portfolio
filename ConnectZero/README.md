@@ -27,11 +27,26 @@ So what next. I shot for the moon and learned that its not easy to reach. I deci
 The game of connect four is like a bigger version of tic tac toe. Two players take turns dropping their piece into one of seven columns. The first player to reach four in a row wins. To program this I built the following:
 A class Game established a 7 x 6 2D array filled with zeros called the board. The board could be manipulated by a place function that would simulate dropping a piece to the lowest empty spot in the column chosen as long as that column was not already full. Then the end function would test if there were any four in a rows in the board. If so it would end the game. In addition the state and move taken were saved that would later be used to train the AI.
 
-Another class GameRoom was created that dealt with the meta of the game. Taking turns, how many rounds would by played and who was playing
+Another class GameRoom was created that dealt with the meta of the game. Taking turns, how many rounds would by played and who is playing these rounds. It also shows you the score and a allows you to see what the board looks like from a user-friendly perspective. It also puts all the data from the games into the dictionary data_store which is later used to train the neural networks.
 
 ## Neural Network
+The class Neural sets up a convolutional neural network which takes in the board state and outputs a softmax distribution for moves 1 through 7. 1 represents placing your piece in the left most column and 7 is the right most. The choice function then predicts the best move based off the board using the neural network. The neural network targets (rewards) are the moves of the winning players.
 
-## Monte Carlo Tree Search
+The neural network also uses dropout and batchnormalization techniques to help prevent overfitting.
+
+## Monte Carlo Tree Search (MCTS)
+MCTS is an efficient and clever tree search method that AlphaGO and AlphaZero use alongside their neural networks. MCTS works by first expanding from the parent node (the current board state) into 7 child nodes representing the 7 possible moves in connect four. It selects a child node that hasn't been selected in the past. If all nodes have been selected than it uses the uct function to decide which child node to reselect. Once a node is selected the rest of the game is simulated with two rollout players for the two sides of the game. For the sake of time the rollout players are typically rng players or very simple heuristic players (such as Dolphin in my program). The simulation runs until a winner or draw is reached. The child node has two values:
+n = amount of times the node is selected
+q = the score of the node based of wins or losses when it was selected
+
+These values are updated after the game. if the simulation led to a win for example then the selected node will recieve a +1 q score and will always recieve a +1 n score regardless of the outcome. The key thing about MCTS is that if a child node is selected for a second time then that child node will create 7 of its own child nodes which represent the 7 possible moves of the opponent (each generation oscillates between representing the player side and the opponent side). This process of child nodes expanding making more child nodes goes on indefinately and only based on the programmers desired search time length. 
+
+When a child node's q and n values are updated it also updates the q and n values of the parent node as well, and the grandparent node's q and n values, and great grandparent and so on until the intital node which represents the current real game board state.
+
+The uct is a critical function in selecting the right node. Some might think that just having a high q (wins) is enough to justify selecting a node. However, the genius of the MCTS comes from balancing explotation with exploration. If we only investigate nodes with high q our tree search will get stuck (exploting) a single path. This is terrible! We need a tree search that does thouroughly search through a promising node path but also is willing to explore other node paths as well even if a couple of their simulations turned out poorly. 
+
+The basic uct function varient I use is uct(node_child, node_parent) = node_child.q/node_child.n + sqrt(log(node_parent.n)/node_child.n)
+The higher the uct the more likely the child node will be selected from the parent node. Notice a high win rate (q/n) will lead to a high uct value. However a high child.n value being in the denominator of the second term will lead the second term to be smaller. If parent.n is very high and child.n is very low this causes the second term in uct to get very large meaning that many of the other child nodes have been searched extensively and now its time to give this child a chance. Effectively uct is like a wise coach which frequently uses the best players but tries to give everyone a chance because who knows, a player might suprise everyone and win the game.
 
 ## Conclusion
 
