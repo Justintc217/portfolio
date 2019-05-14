@@ -88,7 +88,7 @@ def place_general(action, player_id, board):
             board[action][i] = player_id
             return board
 
-class Branch():
+class Branch(): #creates structure of tree to be used in MCTS
     def __init__(self, branch_id, player_id, board, q = 0, n = 0, policy_weight = 0, initial = False):
         self.branch_id = branch_id
         self.player_id = player_id
