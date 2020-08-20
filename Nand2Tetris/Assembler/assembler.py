@@ -1,5 +1,6 @@
 from functools import reduce
 
+
 class Assembler():
     def __init__(self, comp, dest, jump, symbols, asm_file):
         self.comp = comp
@@ -7,15 +8,15 @@ class Assembler():
         self.jump = jump
         self.symbols = symbols
         self.asm_file = asm_file
-    
+
     # prepare data
     def extract_assembly_from_file(self):
         def clean_line(line):
-            return line.rstrip("\n").replace(" ", "").split("//")[0]
+            return line.rstrip("\n").replace(" ", "").replace("\t", "").split("//")[0]
         cleaned_assembly = [clean_line(line) for line in self.asm_file.readlines()]
         filtered_assembly = list(filter(None, cleaned_assembly))
         return filtered_assembly
-    
+
     def load_reference_to_symbols_table(self, assembly):
         # side effect
         index = 0
@@ -25,23 +26,23 @@ class Assembler():
                 self.symbols[ref] = str(index)
             else:
                 index += 1
-    
+
     def remove_references(self, assembly):
         assembly_without_references = list(filter(
             lambda x: not x.startswith("("),
             assembly
-            ))
+        ))
         return assembly_without_references
-    
+
     # assembly -> binary
     def assemble(self, assembly_without_references):
         binary_output = reduce(
-            (lambda x, y: "%s%s" %(x,y)),
+            (lambda x, y: "%s%s" % (x, y)),
             map(
                 self.decider,
                 assembly_without_references
-                )
             )
+        )
         return binary_output
 
     def decider(self, line):
@@ -58,29 +59,29 @@ class Assembler():
             address = self.symbolic_address_to_address(address)
         binary = '{:016b}'.format(address)
         return binary
-    
+
     def symbolic_address_to_address(self, symbolic_address):
-        # A_handler helper function 
+        # A_handler helper function
         try:
             address = int(self.symbols[symbolic_address])
         except KeyError:
-            self.add_symbol_address(symbolic_address)
+            self.load_symbol_address_to_symbols_table(symbolic_address)
             address = int(self.symbols[symbolic_address])
         return address
-    
+
     def load_symbol_address_to_symbols_table(self, symbolic_address):
         # side effect of the A_handler helper
         for open_address in range(16, 16384):
             if open_address not in self.symbols.values():
                 self.symbols[symbolic_address] = str(open_address)
                 break
-    
+
     # C instruction handling
     def C_handler(self, line):
         comp_key, dest_key, jump_key = self.partition(line)
         binary = "111" + self.comp[comp_key] + self.dest[dest_key] + self.jump[jump_key]
-        return binary    
-    
+        return binary
+
     def partition(self, line):
         # C_handler helper function
         if "=" in line:

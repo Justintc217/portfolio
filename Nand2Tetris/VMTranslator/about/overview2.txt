@@ -1,0 +1,101 @@
+label
+    labelname --> (labelname)
+goto label
+    @label
+    0; JMP
+if-goto label - if true (ffff) then jump to label
+    @SP
+    M=M-1 // SP--    
+    A=M
+    D=M // D=*(SP-1)
+    @label
+    D; JNE
+
+
+Handling Call
+push returnAddress
+    *SP = returnAddress
+        @returnAddress // {functionName}$ret.{ref} where ref is some reference id
+        D=A
+        @SP
+        A=M
+        M=D
+    SP++
+push LCL //save LCL and next 4
+    *SP = LCL
+    SP++
+push ARG
+push THIS
+push THAT
+ARG = SP-5-nArgs //base of ARG to when nArgs inserted before saving values
+    @nArgs
+    D=A
+    @5
+    D=D+A
+    @SP
+    D=M-D // SP-5-nArgs
+    @ARG
+    M=D
+LCL=SP
+    @SP
+    D=M
+    @LCL
+    M=D
+goto functionName
+    @{functionName}
+    0;JMP
+    (returnAddress)  //line number in code, not related to stack pointer
+
+Handling Function
+push 0 // nVar number of times (how many local variables are there)
+we push 0 and not just move SP so that all local variables are initialized at 0
+Assembly:
+    ({functionName}) 
+    push 0 // multiply "push 0\n" by nVar
+        @SP
+        A=M
+        M=0
+        A=A+1
+Handling Return
+endFrame = LCL
+    @LCL
+    D=M
+    @endFrame
+    M=D
+retAddr = *(endFrame - 5)
+    @5
+    D=A
+    @endFrame
+    M=M-D
+    A=M // returnAddress
+    D=M
+    @returnAddress // should be specific address
+    M=D
+*ARG = pop() // because return value set by all functions to argument 0
+    @SP
+    M=M-1
+    A=M
+    D=M // get value on top of stack
+    @ARG
+    A=M
+    M=D
+SP = ARG + 1
+    @ARG
+    D=M+1
+    @SP
+    M=D
+THAT = *(endFrame - 1)
+    @1
+    D=A
+    @endFrame
+    M=M-D
+    A=M // saved THAT
+    D=M
+    @THAT
+    M=D
+THIS = *(endFrame - 2)
+ARG = *(endFrame - 3)
+LCL = *(endFrame - 4)
+goto retAddr
+    @returnAddress
+    0;JMP

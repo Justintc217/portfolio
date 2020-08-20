@@ -1,0 +1,10 @@
+VM translator
+input byte code outputs assembly
+
+need to open file
+clean it
+    dont need to strip comments
+need parser to split it into 3 components
+Artithmetic database
+push pop database
+Handler

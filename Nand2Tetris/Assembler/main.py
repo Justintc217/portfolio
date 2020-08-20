@@ -6,9 +6,9 @@ from c_instruction_map import comp, dest, jump, symbols
 try:
     relative_path = Path(sys.argv[1])
 except IndexError:
-    relative_path = Path(input("type file path from 06. eg \"add/Add.asm\" :"))
+    relative_path = Path(input("type file path from projects. eg \"06/add/Add.asm\" :"))
 
-PROJECT_PATH = Path("D:/nand2tetris/projects/06")
+PROJECT_PATH = Path("D:/nand2tetris/projects")
 PROGRAM_PATH = PROJECT_PATH / relative_path
 HACK_PATH = PROGRAM_PATH.parent / (PROGRAM_PATH.stem + ".hack")
 

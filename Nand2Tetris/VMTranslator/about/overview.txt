@@ -1,0 +1,209 @@
+base commands
+    push - from specified location in memory segment to stack pointer value on stack
+    pop - from stack at stack pointer value address onto specified location in memory segment
+
+Arithmetic commands
+    stack is (..., x, y)
+    -1 is true
+    eq refers to x==y
+    add: x + y
+        SP--
+            @SP
+            M=M-1
+        D=*SP
+            A=M
+            D=M
+        A=SP-1
+            A=A-1
+        *SP=D+*SP
+            M=D+M
+    sub: x - y
+        SP--
+            @SP
+            M=M-1
+        D=*SP
+            A=M
+            D=M // y
+        A=SP-1
+            A=A-1
+        *SP=D+*SP
+            M=M-D // x - y
+    neg: -y
+        @SP
+        A=M-1
+        M=-M
+    eq0: x==0
+        D=*(SP-1)
+        if D==0:
+            *(SP-1)=1
+        else:
+            *(SP-1)=0
+        --
+        @SP
+        A=M-1
+        D=M
+        @if
+        D;JEQ
+        D=0
+        @finally
+        0;JMP
+        (if)
+        D=-1
+        (finally)
+        @SP
+        A=M-1
+        M=D
+    gt: x > y
+        sub: x - y
+        @SP
+        A=M-1
+        D=M
+        @if
+        D;JGT // varies with gt, lt, eq
+        D=0
+        @finally
+        0;JMP
+        (if)
+        D=-1
+        (finally)
+        @SP
+        A=M-1
+        M=D
+    lt: x < y
+        same as above but D;JLT
+    and: x and y
+        @SP
+        M=M-1
+        A=M
+        D=M
+        A=A-1
+        M=D&M
+    or: x or y
+        @SP
+        M=M-1
+        A=M
+        D=M
+        A=A-1
+        M=D|M
+    not: not x --> boolean
+        @SP
+        A=M-1
+        M=~M
+
+
+Memory Segments
+    Segment Pointers
+        LCL
+            push local i
+                addr=LCL+i
+                    @LCL // @1
+                    D=M
+                    @i
+                    A=D+A
+                *SP = *addr
+                    D=M
+                    @SP
+                    A=M
+                    M=D
+                SP++
+                    @SP
+                    M=M+1
+            pop local i
+                notes
+                    do the process as a whole not just in chunks
+                    @addr is self contained within pop local i
+                addr=LCL+i
+                    @LCL
+                    D=M
+                    @i
+                    D=D+A
+                    @addr
+                    M=D
+                SP--
+                    @SP 
+                    M=M-1
+                *addr = *SP
+                    A=M
+                    D=M
+                    @addr
+                    A=M
+                    M=D
+        ARG
+            same as above but use @ARG instead of @LCL
+        THIS
+        THAT
+    Constant
+        push constant i
+            *SP = i  // set the address value SP value points to, to the value i
+                @i
+                D = A
+                @SP
+                A=M
+                M=D
+            SP++ // increase value of SP
+                @SP
+                M=M+1
+        pop constant i
+            SP-- // decrement SP to go back 1 in the stack
+                @SP
+                M=M-1  
+            no need to do anything with it, just move the pointer
+    Temp
+        8 addresses from RAM[5] - RAM[12]
+        same as local but base address is always 5
+            addr=5+i
+                @5
+                D=A
+                @i
+                D=D+A
+                @addr
+                M=D
+    Pointer
+        push pointer b (0/1)
+            *SP=THIS/THAT
+                @b
+                D=A
+                @THIS
+                A=D+A
+                D=M
+                @SP
+                A=M
+                M=D
+            SP++
+        pop pointer b
+            SP--
+            THIS/THAT=*SP
+                @b
+                D=A
+                @THIS
+                D=D+A
+                @this_or_that
+                M=D
+                @SP
+                A=M
+                D=M
+                @this_or_that
+                M=D
+    Static
+        push static i (of filename foo)
+            *SP=foo.i
+                @foo.i
+                D=M
+                @SP
+                A=M
+                M=D
+            SP++
+                @SP
+                M=M+1
+        pop static i
+            SP--
+                @SP
+                M=M-1
+            foo.i=*SP
+                A=M
+                D=M // D=*SP
+                @foo.i
+                M=D
+
+
+

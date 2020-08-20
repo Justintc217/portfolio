@@ -1,0 +1,3 @@
+push constant 9
+push constant 9
+eq
