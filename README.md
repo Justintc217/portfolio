@@ -3,8 +3,11 @@
 Welcome to my portfolio!
 
 I recommend looking at the following projects first:
+
 Nand2Tetrs
+
 ConnectZero
+
 StockProphet
 
 ## History of milestones
