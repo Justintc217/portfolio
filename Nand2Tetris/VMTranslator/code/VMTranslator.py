@@ -17,7 +17,6 @@ class VMTranslator():
     def __init__(self, file_path):
         self.vm_file_contents = self.get_contents_from_file(file_path)
         self.filename = "{parent}.{child}".format(parent=file_path.parent.stem, child=file_path.stem)
-        print(self.filename)
         self.ref = self.reference_code_generator()
         self.functionNames = list()
         self.functionRefs = list()
