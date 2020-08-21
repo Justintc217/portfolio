@@ -4,11 +4,11 @@ Welcome to my portfolio!
 
 I recommend looking at the following projects first:
 <br>
-Nand2Tetris
+[Nand2Tetris](https://github.com/Justintc217/portfolio/tree/master/Nand2Tetris)
 <br>
-ConnectZero
+[ConnectZero](https://github.com/Justintc217/portfolio/tree/master/ConnectZero)
 <br>
-StockProphet
+[StockProphet](https://github.com/Justintc217/portfolio/tree/master/stockProphetPortfolio)
 
 
 ## History of milestones
