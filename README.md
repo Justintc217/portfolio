@@ -4,11 +4,11 @@ Welcome to my portfolio!
 
 I recommend looking at the following projects first:
 
-Nand2Tetrs
+### Nand2Tetris
 
-ConnectZero
+### ConnectZero
 
-StockProphet
+### StockProphet
 
 ## History of milestones
 A long time ago I began my journey as all coders do learning the very basics. Lists? what are those? I began by creating a fibonnaci sequence and found the 10001st prime number. I advanced on to harder and harder math problems such as finding the the value of the first triangle number to have over five hundred divisors.
