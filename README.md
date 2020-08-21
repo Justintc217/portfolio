@@ -3,9 +3,12 @@
 Welcome to my portfolio!
 
 I recommend looking at the following projects first:
-### Nand2Tetris
-### ConnectZero
-### StockProphet
+<br>
+Nand2Tetris
+<br>
+ConnectZero
+<br>
+StockProphet
 
 
 ## History of milestones
