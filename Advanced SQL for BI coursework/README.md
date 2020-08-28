@@ -1,6 +1,6 @@
 The assignments folder contains all completed work for the course by Maven Analytics: [Advanced SQL + MySQL for Analytics & Business Intelligence](https://www.udemy.com/course/advanced-sql-mysql-for-analytics-business-intelligence/)
 
-The course is very highly rated on Udemy and many reviews state that it is a challenging course. The course trains students to solve real world business analytics problems in SQL. 
+The course is very highly rated on Udemy and many reviews state that it is challenging.
 
 #### Topics include: 
 - Conversion funnels across different products
