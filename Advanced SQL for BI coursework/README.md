@@ -1,4 +1,4 @@
-This is all coursework following the course by Maven Analytics: Advanced SQL + MySQL for Analytics & Business Intelligence
+The assignments folder contains all completed work for the course by Maven Analytics: "Advanced SQL + MySQL for Analytics & Business Intelligence"
 
 All work is completed by myself (Justin Collins) and not copied.
 
