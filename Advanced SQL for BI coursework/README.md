@@ -1,7 +1,5 @@
 The assignments folder contains all completed work for the course by Maven Analytics: [Advanced SQL + MySQL for Analytics & Business Intelligence](https://www.udemy.com/course/advanced-sql-mysql-for-analytics-business-intelligence/)
 
-[Tableau Work](https://public.tableau.com/profile/justin.collins6705#!/vizhome/FuzzyFactoryWebAnalyticsReport/Overview)
-
 The course is very highly rated on Udemy and many reviews state that it is challenging.
 
 #### Topics include: 
