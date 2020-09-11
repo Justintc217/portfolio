@@ -4,6 +4,10 @@ Welcome to my portfolio!
 
 I recommend looking at the following projects first:
 <br>
+[SQL Work](https://github.com/Justintc217/portfolio/tree/master/Advanced%20SQL%20for%20BI%20coursework)
+<br>
+[Tableau Work](https://public.tableau.com/profile/justin.collins6705#!/vizhome/FuzzyFactoryWebAnalyticsReport/Overview)
+<br>
 [Nand2Tetris](https://github.com/Justintc217/portfolio/tree/master/Nand2Tetris)
 <br>
 [ConnectZero](https://github.com/Justintc217/portfolio/tree/master/ConnectZero)
