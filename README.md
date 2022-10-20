@@ -1,12 +1,7 @@
-# Portfolio_General
-
-Welcome to my portfolio!
-
-I recommend looking at the following projects first:
-<br>
+>
 [SQL Work](https://github.com/Justintc217/portfolio/tree/master/Advanced%20SQL%20for%20BI%20coursework)
 <br>
-[Tableau Work](https://public.tableau.com/profile/justin.collins6705#!/vizhome/FuzzyFactoryWebAnalyticsReport/Overview)
+[Tableau Work](https://public.tableau.com/views/WebAnalyticsReport/Overview?:language=en-US&:display_count=n&:origin=viz_share_link)
 <br>
 [Nand2Tetris](https://github.com/Justintc217/portfolio/tree/master/Nand2Tetris)
 <br>
